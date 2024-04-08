@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="categoriesLoaded">
     <v-container justify="center" align="center">
       <v-img
         :width="150"
@@ -13,20 +13,37 @@
       <v-list-item title="HOME"></v-list-item>
       <v-list-item title="ITEMS"></v-list-item>
       <v-list-item title="CATEGORIES">
-        <v-list-item class="category-items"
-                     v-for="n in number"
-                     :key="n"
-                     :title="'Item ' + n"
+        <v-list-item
+          class="category-items"
+          v-for="category in categories"
+          :key="category.category_id"
+          :title="category.name"
         ></v-list-item>
       </v-list-item>
       <v-list-item title="ABOUT"></v-list-item>
       <v-list-item title="FAQ"></v-list-item>
     </v-container>
   </v-container>
+  <v-container v-else>
+    test
+  </v-container>
 </template>
 
 <script lang="ts" setup>
-let number = 10
+import openDatabase from "@/database";
+import {onMounted, ref} from "vue";
+
+let categories = ref<any[]>([])
+let categoriesLoaded = ref<boolean>(false)
+
+onMounted(async () => {
+  const db = await openDatabase()
+  db.all('select * from categories', [], (err, rows) => {
+    if (err) throw err
+    categories.value = rows
+    categoriesLoaded.value = true
+  })
+})
 </script>
 
 <style scoped>
@@ -36,6 +53,6 @@ let number = 10
 }
 
 .category-items {
-  font-size: smaller;
+  font-size: smaller
 }
 </style>
