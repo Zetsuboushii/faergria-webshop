@@ -30,6 +30,7 @@
 
 .display {
   width: 70%;
+  padding: 0;
   background-color: darkkhaki;
 }
 </style>
