@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="categoriesLoaded">
+  <v-container>
     <v-container justify="center" align="center">
       <v-img
         :width="150"
@@ -24,26 +24,29 @@
       <v-list-item title="FAQ"></v-list-item>
     </v-container>
   </v-container>
-  <v-container v-else>
-    test
-  </v-container>
 </template>
 
 <script lang="ts" setup>
-import openDatabase from "@/database";
-import {onMounted, ref} from "vue";
+import { ref, onMounted } from "vue";
 
-let categories = ref<any[]>([])
-let categoriesLoaded = ref<boolean>(false)
+interface Category {
+  category_id: number;
+  name: string;
+}
 
-onMounted(async () => {
-  const db = await openDatabase()
-  db.all('select * from categories', [], (err, rows) => {
-    if (err) throw err
-    categories.value = rows
-    categoriesLoaded.value = true
-  })
-})
+const categories = ref<Category[]>([]);
+
+const fetchUsers = async () => {
+  try {
+    const response = await fetch('http://localhost:1337/categories');
+    const data = await response.json();
+    categories.value = data.data;
+  } catch (error) {
+    console.error("Ein Fehler ist aufgetreten: ", error);
+  }
+};
+
+onMounted(fetchUsers);
 </script>
 
 <style scoped>
