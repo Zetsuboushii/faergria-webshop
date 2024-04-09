@@ -1,6 +1,8 @@
 <template>
   <div v-if="selectedCategory == null || selectedCategory == 'HOME'">
-    <v-container class="text-h5 category-headline">HOME</v-container>
+    <v-row class="head-row">
+      <v-container class="text-h5 category-headline">HOME</v-container>
+    </v-row>
   </div>
   <v-container v-else>
     <ItemGrid :selectedCategory="selectedCategory" class="item-grid"/>
@@ -22,6 +24,14 @@ const selectCategory = (category: any) => {
 <style scoped>
 .category-headline {
   width: 100%;
+}
+
+.head-row {
+  margin: 0;
+  padding: 10px;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .item-grid {

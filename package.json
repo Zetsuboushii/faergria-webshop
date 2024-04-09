@@ -7,8 +7,7 @@
     "serve": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "start": "nodemon --exec ts-node ./src/server.js",
-    "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@capacitor-community/sqlite": "^5.7.1",
@@ -18,8 +17,6 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "roboto-fontface": "*",
-    "sql": "^0.78.0",
-    "sql.js": "^1.10.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "vue": "^3.2.0",
@@ -34,10 +31,7 @@
     "@types/sql.js": "^1.4.9",
     "@types/sqlite3": "^3.1.11",
     "@vitejs/plugin-vue": "^4.0.0",
-    "@vue/eslint-config-typescript": "^11.0.0",
     "concurrently": "^8.2.2",
-    "eslint": "^8.22.0",
-    "eslint-plugin-vue": "^9.3.0",
     "nodemon": "^3.1.0",
     "sass": "^1.60.0",
     "ts-node": "^10.9.2",
