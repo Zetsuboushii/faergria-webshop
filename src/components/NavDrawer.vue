@@ -1,17 +1,15 @@
 <template>
   <v-container>
-    <v-container justify="center" align="center">
+    <v-container align="center">
       <v-img
         :width="150"
-        aspect-ratio="16/9"
-        cover
-        src="./assets/logo.svg"
+        src="../assets/logo.png"
       ></v-img>
     </v-container>
     <v-divider></v-divider>
     <v-container justify="center" class="nav-container-content">
-      <v-list-item title="HOME"></v-list-item>
-      <v-list-item title="ITEMS"></v-list-item>
+      <v-list-item title="HOME" @click="selectCategory('HOME')"></v-list-item>
+      <v-list-item title="ITEMS" @click="selectCategory('ITEMS')"></v-list-item>
       <v-list-item title="CATEGORIES">
         <v-list-item
           class="category-items"
@@ -21,14 +19,14 @@
           @click="selectCategory(category)"
         ></v-list-item>
       </v-list-item>
-      <v-list-item title="ABOUT"></v-list-item>
-      <v-list-item title="FAQ"></v-list-item>
+      <v-list-item title="ABOUT" @click="selectCategory('ABOUT')"></v-list-item>
+      <v-list-item title="FAQ" @click="selectCategory('FAQ')"></v-list-item>
     </v-container>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, defineEmits } from "vue";
+import {defineEmits, onMounted, ref} from "vue";
 
 interface Category {
   category_id: number;
@@ -47,6 +45,7 @@ const fetchCategories = async () => {
   }
 };
 
+// eslint-disable-next-line vue/valid-define-emits
 const emit = defineEmits();
 const selectCategory = (category: any) => {
   emit('category-selected', category)

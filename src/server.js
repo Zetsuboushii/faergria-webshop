@@ -28,7 +28,7 @@ app.get('/categories', (req, res) => {
 })
 
 app.get('/items', (req, res) => {
-  const sql = 'select * from items join categories c on c.category_id = items.fk_category'
+  const sql = 'select * from items join categories cat on cat.category_id = items.fk_category join main.collection col on col.collection_id = items.fk_collection'
   db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message })
