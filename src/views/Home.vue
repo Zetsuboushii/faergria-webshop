@@ -1,13 +1,20 @@
 <template>
   <v-container class="site-container" justify="center">
-    <NavDrawer class="nav-drawer" />
-    <Display class="display"/>
+    <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
+    <Display :selectedCategory="selectedCategory" class="display"/>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-  import NavDrawer from "@/components/NavDrawer.vue";
-  import Display from "@/views/Display.vue";
+import {ref} from 'vue';
+import NavDrawer from "@/components/NavDrawer.vue";
+import Display from "@/views/Display.vue";
+
+const selectedCategory = ref(null);
+
+const onCategorySelected = (category: any) => {
+  selectedCategory.value = category;
+}
 </script>
 
 <style scoped>

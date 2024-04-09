@@ -5,7 +5,7 @@
         :width="150"
         aspect-ratio="16/9"
         cover
-        src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+        src="./assets/logo.svg"
       ></v-img>
     </v-container>
     <v-divider></v-divider>
@@ -17,7 +17,8 @@
           class="category-items"
           v-for="category in categories"
           :key="category.category_id"
-          :title="category.name"
+          :title="category.category_name"
+          @click="selectCategory(category)"
         ></v-list-item>
       </v-list-item>
       <v-list-item title="ABOUT"></v-list-item>
@@ -27,16 +28,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 
 interface Category {
   category_id: number;
-  name: string;
+  category_name: string;
 }
 
 const categories = ref<Category[]>([]);
 
-const fetchUsers = async () => {
+const fetchCategories = async () => {
   try {
     const response = await fetch('http://localhost:1337/categories');
     const data = await response.json();
@@ -46,7 +47,12 @@ const fetchUsers = async () => {
   }
 };
 
-onMounted(fetchUsers);
+const emit = defineEmits();
+const selectCategory = (category: any) => {
+  emit('category-selected', category)
+}
+
+onMounted(fetchCategories);
 </script>
 
 <style scoped>

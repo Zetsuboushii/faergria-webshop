@@ -14,7 +14,21 @@ const db = new sqlite3.Database('./src/identifier.sqlite', sqlite3.OPEN_READWRIT
 })
 
 app.get('/categories', (req, res) => {
-  const sql = 'SELECT * FROM categories'
+  const sql = 'select * from categories'
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message })
+      return
+    }
+    res.json({
+      message: 'Erfolg',
+      data: rows
+    })
+  })
+})
+
+app.get('/items', (req, res) => {
+  const sql = 'select * from items join categories c on c.category_id = items.fk_category'
   db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message })
