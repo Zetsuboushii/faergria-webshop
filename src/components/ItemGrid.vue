@@ -1,6 +1,6 @@
 <template>
-  <v-row v-if="filteredItems.length > 0" class="head-row">
-    <v-container class="text-h5 category-headline">CATEGORY/{{ filteredItems[0].category_name }}</v-container>
+  <v-row v-if="!isLoadingItems && filteredItems.length > 0" class="head-row">
+    <v-container class="text-h5 category-headline">{{ filteredItems[0].category_name }}</v-container>
     <v-divider></v-divider>
     <v-col v-for="(item, i) in filteredItems" :key="i" class="items-col">
       <v-card height="450" width="335" class="item-card">
@@ -35,8 +35,8 @@ import {onMounted, ref, watch} from "vue"
 interface Item {
   item_id: string
   item_name: string
-  collection_name: string
   category_name: string
+  collection_name: string
 }
 
 const props = defineProps(["selectedCategory"])

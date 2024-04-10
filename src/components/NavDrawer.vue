@@ -16,6 +16,15 @@
           @click="selectCategory(category)"
         ></v-list-item>
       </v-list-item>
+      <v-list-item title="COLLECTIONS">
+        <v-list-item
+          class="category-items"
+          v-for="collection in collections"
+          :key="collection.collection_id"
+          :title="collection.collection_name"
+          @click="selectCategory(collection)"
+        ></v-list-item>
+      </v-list-item>
       <v-list-item title="ABOUT" @click="selectCategory('ABOUT')"></v-list-item>
       <v-list-item title="FAQ" @click="selectCategory('FAQ')"></v-list-item>
     </v-container>
@@ -23,38 +32,58 @@
 </template>
 
 <script lang="ts" setup>
-import {defineEmits, onMounted, ref} from "vue";
+import {defineEmits, onMounted, ref} from "vue"
 
 interface Category {
-  category_id: number;
-  category_name: string;
+  category_id: number
+  category_name: string
 }
 
-const categories = ref<Category[]>([]);
+interface Collection {
+  collection_id: number
+  collection_name: string
+}
+
+const categories = ref<Category[]>([])
+const collections = ref<Collection[]>([])
 
 const fetchCategories = async () => {
   try {
-    const response = await fetch('http://localhost:1337/categories');
-    const data = await response.json();
-    categories.value = data.data;
+    const response = await fetch('http://localhost:1337/categories')
+    const data = await response.json()
+    categories.value = data.data
   } catch (error) {
-    console.error("Ein Fehler ist aufgetreten: ", error);
+    console.error("Ein Fehler ist aufgetreten: ", error)
   }
-};
+}
+
+const fetchCollections = async () => {
+  try {
+    const response = await fetch('http://localhost:1337/collections')
+    const data = await response.json()
+    collections.value = data.data
+  } catch (error) {
+    console.error("Ein Fehler ist aufgetreten: ", error)
+  }
+}
 
 // eslint-disable-next-line vue/valid-define-emits
-const emit = defineEmits();
+const emit = defineEmits()
+
 const selectCategory = (category: any) => {
   emit('category-selected', category)
 }
 
-onMounted(fetchCategories);
+onMounted(() => {
+  fetchCategories();
+  fetchCollections();
+});
 </script>
 
 <style scoped>
 .nav-container-content {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .category-items {
