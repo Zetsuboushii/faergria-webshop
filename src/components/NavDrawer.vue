@@ -1,10 +1,7 @@
 <template>
   <v-container>
     <v-container align="center">
-      <v-img
-        :width="150"
-        src="../assets/logo.png"
-      ></v-img>
+      <v-img :width="150" src="../assets/logo.png"></v-img>
     </v-container>
     <v-divider></v-divider>
     <v-container justify="center" class="nav-container-content">

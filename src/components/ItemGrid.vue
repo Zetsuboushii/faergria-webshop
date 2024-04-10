@@ -1,20 +1,29 @@
 <template>
   <v-row v-if="filteredItems.length > 0" class="head-row">
     <v-container class="text-h5 category-headline">CATEGORY/{{ filteredItems[0].category_name }}</v-container>
+    <v-divider></v-divider>
     <v-col v-for="(item, i) in filteredItems" :key="i" class="items-col">
       <v-card height="450" width="335" class="item-card">
         <v-card-title>{{ item.item_name }}</v-card-title>
-        <v-card-text>{{ item.category_name + '\n' + item.collection_name }}</v-card-text>
+        <v-divider></v-divider>
+        <v-card-text>{{ item.collection_name }}</v-card-text>
+        <div class="item-img">
+          <v-img :width="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
+        </div>
       </v-card>
     </v-col>
   </v-row>
   <v-row v-else class="head-row">
     <!--TODO Bug: ITEMS HL wird immer bei erster Anwahl angezeigt-->
     <v-container class="text-h5 category-headline">ITEMS</v-container>
+    <v-divider></v-divider>
     <v-col v-for="(item, i) in items" :key="i" class="items-col">
       <v-card height="450" width="335" class="item-card">
         <v-card-title>{{ item.item_name }}</v-card-title>
-        <v-card-text>{{ item.category_name + '\n' + item.collection_name }}</v-card-text>
+        <v-card-text>{{ item.collection_name }}</v-card-text>
+        <div class="item-img">
+          <v-img :width="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -24,7 +33,7 @@
 import {onMounted, ref, watch} from "vue"
 
 interface Item {
-  item_id: number
+  item_id: string
   item_name: string
   collection_name: string
   category_name: string
@@ -78,5 +87,11 @@ watch(() => props.selectedCategory, filterItems, {deep: true})
 .items-col {
   margin: 0;
   padding: 0;
+}
+
+.item-img {
+  padding: 0;
+  display: flex;
+  justify-content: center;
 }
 </style>

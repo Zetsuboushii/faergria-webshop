@@ -26,18 +26,15 @@ const onCategorySelected = (category: any) => {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  background-color: blanchedalmond;
   padding: 0;
 }
 
 .nav-drawer {
   width: 30%;
-  background-color: cadetblue;
 }
 
 .display {
   width: 70%;
   padding: 0;
-  background-color: darkkhaki;
 }
 </style>

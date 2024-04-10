@@ -1,28 +1,29 @@
-# Faergria Webshop
+# faergria.shop
 
 ## Business Case für einen Merchandise-Onlineshop
 
 ### 1. Executive Summary
 
 Der vorliegende Business Case beschreibt die Gründung und den Betrieb eines Onlineshops für Merchandise-Artikel, der
-sich auf spezialisierte Nischenmärkte, wie Fans von Indie-Videospielen, Comic-Enthusiasten und Liebhaber von Kultfilmen,
-fokussiert. Durch einzigartige Produkte, eine starke Online-Präsenz und ausgezeichnete Kundenerfahrungen zielt dieses
-Geschäft darauf ab, eine treue Kundenbasis aufzubauen und eine führende Position im Segment des Merchandise-Handels zu
-erlangen.
+sich auf den spezialisierten Nischenmarkt der Community einer Kampagne eines Tabletop-RPGs (TTRPG) fokussiert.
+Durch einzigartige Produkte, eine starke Online-Präsenz und ausgezeichnete Kundenerfahrungen zielt dieses
+Geschäft darauf ab, eine treue Kundenbasis aufzubauen, beziehungsweise die Community zu stärken und eine führende
+Position im Segment des Merchandise-Handels zu erlangen.
 
 ### 2. Marktanalyse
 
-Marktbedarf: Die Popularität von Indie-Videospielen, Comics und Kultfilmen wächst stetig. Fans suchen nach Wegen, ihre
-Leidenschaft durch den Kauf von Merchandise-Artikeln auszudrücken.
-Zielgruppenanalyse: Die primäre Zielgruppe besteht aus 18- bis 35-Jährigen, die aktive Nutzer sozialer Medien sind und
-Wert auf Originalität und Qualität legen.
+Marktbedarf: Die Popularität von Indie-Videospielen, Comics und Kultfilmen wächst stetig. Gerade Tabletop-RPGs, wie
+Dungeons & Dragons gewinnen stetig an Communitywachstum. Fans suchen nach Wegen, ihre Leidenschaft durch den Kauf von
+Merchandise-Artikeln auszudrücken.
+Zielgruppenanalyse: Die primäre Zielgruppe besteht aus 18- bis 35-Jährigen Fans der Kampagne, die aktive Nutzer
+sozialer Medien sind und Wert auf Originalität und Qualität legen.
 
 ### 3. Wettbewerbsanalyse
 
-Direkte Konkurrenz: Es gibt bereits etablierte Merchandise-Shops. Allerdings fehlt es vielen an Nischensortimenten und
-personalisiertem Kundenservice.
-Marktlücke: Unser Onlineshop wird sich durch limitierte Editionen, Kollaborationen mit Indie-Entwicklern und Künstlern
-sowie durch exklusive Produkte differenzieren.
+Direkte Konkurrenz: Es gibt bereits etablierte Merchandise-Shops; auch von anderen TTRPG-Kampagnen. Allerdings fehlt es
+vielen an Nischensortimenten und personalisiertem Kundenservice.
+Marktlücke: Dieser Onlineshop wird sich durch limitierte Editionen, Kollaborationen mit dem kreativen Kopf und
+Spielleiter der Kampagne, sowie durch exklusive Produkte differenzieren.
 
 ### 4. Geschäftsmodell
 
