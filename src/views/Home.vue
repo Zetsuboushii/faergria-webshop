@@ -1,8 +1,9 @@
 <template>
-  <v-container class="site-container" justify="center">
-    <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
-    <Display :selectedCategory="selectedCategory" class="display"/>
-  </v-container>
+    <!-- <v-img class="head-banner" :width="1920" src="../assets/header.png"></v-img> -->
+    <v-container class="content-container" justify="center">
+      <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
+      <Display :selectedCategory="selectedCategory" class="display"/>
+    </v-container>
 </template>
 
 <script lang="ts" setup>
@@ -18,7 +19,11 @@ const onCategorySelected = (category: any) => {
 </script>
 
 <style scoped>
-.site-container {
+.head-banner {
+  z-index: 0;
+}
+
+.content-container {
   display: flex;
   justify-content: flex-start;
   width: 100%;
