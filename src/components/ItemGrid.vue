@@ -1,8 +1,8 @@
 <template>
-  <v-row v-if="!isLoadingItems && filteredItems.length > 0" class="head-row">
+  <v-row v-if="!isLoadingItems" class="head-row">
     <v-container class="text-h4 category-headline">{{ selectedCategory.category_name }}</v-container>
     <v-divider></v-divider>
-    <v-col v-for="(item, i) in filteredItems" :key="i" class="items-col">
+    <v-col v-for="(item, i) in filterItems()" :key="i" class="items-col">
       <v-card height="auto" width="335" class="item-card">
         <v-card-title class="card-title">{{ item.item_name }}</v-card-title>
         <v-card-subtitle class="card-subtitle">{{ item.collection_name }}</v-card-subtitle>
@@ -47,21 +47,22 @@ const fetchItems = async () => {
     const response = await fetch("http://localhost:1337/items")
     const data = await response.json()
     items.value = data.data
+    isLoadingItems.value = false
   } catch (error) {
     console.error("Ein Fehler ist aufgetreten: ", error)
   }
 }
 
-const filterItems = async () => {
+const filterItems = () => {
+  console.log("bogos")
   if (props.selectedCategory && props.selectedCategory.category_name) {
-    filteredItems.value = items.value.filter(
+    return items.value.filter(
       (item) => item.category_name === props.selectedCategory.category_name
     )
   }
   if (props.selectedCategory === "ITEMS") {
-    filteredItems.value = items.value
+    return items.value
   }
-  isLoadingItems.value = false
 }
 
 onMounted(fetchItems)
