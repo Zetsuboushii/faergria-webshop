@@ -1,7 +1,7 @@
 <template>
   <div v-if="selectedCategory == null || selectedCategory == 'HOME'">
     <v-row class="head-row">
-      <v-container class="text-h5 category-headline">HOME</v-container>
+      <v-container class="text-h4 category-headline">HOME</v-container>
       <v-divider></v-divider>
     </v-row>
   </div>

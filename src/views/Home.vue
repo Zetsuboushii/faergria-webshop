@@ -1,5 +1,5 @@
 <template>
-  <v-parallax height="600" src="../assets/header.png"></v-parallax>
+  <v-parallax height="60%" src="../assets/header.png"></v-parallax>
   <v-container class="content-container" justify="center">
     <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
     <Display :selectedCategory="selectedCategory" class="display"/>
@@ -23,7 +23,7 @@ const onCategorySelected = (category: any) => {
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  height: 100%;
+  max-height: 1000px;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -37,5 +37,7 @@ const onCategorySelected = (category: any) => {
 .display {
   width: 70%;
   padding: 0;
+  max-height: 1000px;
+  overflow: scroll;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-row v-if="!isLoadingItems" class="head-row">
-    <v-container class="text-h4 category-headline">{{ selectedCategory.category_name }}</v-container>
+    <v-container class="text-h4 category-headline">{{ props.selectedCategory.category_name }}</v-container>
     <v-divider></v-divider>
     <v-col v-for="(item, i) in filterItems()" :key="i" class="items-col">
       <v-card height="auto" width="335" class="item-card">
@@ -11,10 +11,10 @@
           <v-img :width="300" :max-height="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
         </div>
         <v-container class="item-info">
-          <div class="text-h6 item-price">{{ item.price + "€" }}</div>
+          <div class="text-h5 item-price">{{ item.price + "€" }}</div>
           <div class="item-stock bg-green-accent-1" v-if="item.stock >= 25">In Stock</div>
           <div class="item-stock bg-yellow-accent-1" v-if="item.stock < 25 && item.stock > 0">Few Left</div>
-          <div class="item-stock bg-red-accent-1" v-if="item.stock == 0">Sold Out</div>
+          <div class="item-stock bg-red-accent-1" v-if="item.stock == 0">Out of Stock</div>
         </v-container>
       </v-card>
     </v-col>
@@ -109,13 +109,13 @@ watch(() => props.selectedCategory, filterItems, {deep: true})
 }
 
 .item-price {
-  width: 65%;
+  width: 60%;
   margin: 0;
 }
 
 .item-stock {
   padding: 10px;
-  width: 35%;
+  width: 40%;
   text-align: center;
   border-radius: 10px;
 }
