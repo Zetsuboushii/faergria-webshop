@@ -36,6 +36,16 @@ interface Item {
   stock: number
 }
 
+interface Category {
+  category_id: number
+  category_name: string
+}
+
+interface Collection {
+  collection_id: number
+  collection_name: string
+}
+
 const props = defineProps(["selectedCategory"])
 const items = ref<Item[]>([])
 const filteredItems = ref<Item[]>([])
