@@ -1,31 +1,26 @@
 <template>
   <v-row v-if="!isLoadingItems && filteredItems.length > 0" class="head-row">
-    <v-container class="text-h5 category-headline">{{ filteredItems[0].category_name }}</v-container>
+    <v-container class="text-h4 category-headline">{{ selectedCategory.category_name }}</v-container>
     <v-divider></v-divider>
     <v-col v-for="(item, i) in filteredItems" :key="i" class="items-col">
-      <v-card height="450" width="335" class="item-card">
-        <v-card-title>{{ item.item_name }}</v-card-title>
+      <v-card height="auto" width="335" class="item-card">
+        <v-card-title class="card-title">{{ item.item_name }}</v-card-title>
+        <v-card-subtitle class="card-subtitle">{{ item.collection_name }}</v-card-subtitle>
         <v-divider></v-divider>
-        <v-card-text>{{ item.collection_name }}</v-card-text>
         <div class="item-img">
-          <v-img :width="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
+          <v-img :width="300" :max-height="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
         </div>
+        <v-container class="item-info">
+          <div class="text-h6 item-price">{{ item.price + "€" }}</div>
+          <div class="item-stock bg-green-accent-1" v-if="item.stock >= 25">In Stock</div>
+          <div class="item-stock bg-yellow-accent-1" v-if="item.stock < 25 && item.stock > 0">Few Left</div>
+          <div class="item-stock bg-red-accent-1" v-if="item.stock == 0">Sold Out</div>
+        </v-container>
       </v-card>
     </v-col>
   </v-row>
   <v-row v-else class="head-row">
-    <!--TODO Bug: ITEMS HL wird immer bei erster Anwahl angezeigt-->
-    <v-container class="text-h5 category-headline">ITEMS</v-container>
-    <v-divider></v-divider>
-    <v-col v-for="(item, i) in items" :key="i" class="items-col">
-      <v-card height="450" width="335" class="item-card">
-        <v-card-title>{{ item.item_name }}</v-card-title>
-        <v-card-text>{{ item.collection_name }}</v-card-text>
-        <div class="item-img">
-          <v-img :width="300" v-bind:src="'src/assets/items/' + item.item_id + '.jpg'"></v-img>
-        </div>
-      </v-card>
-    </v-col>
+    knecht
   </v-row>
 </template>
 
@@ -37,6 +32,8 @@ interface Item {
   item_name: string
   category_name: string
   collection_name: string
+  price: number
+  stock: number
 }
 
 const props = defineProps(["selectedCategory"])
@@ -52,8 +49,6 @@ const fetchItems = async () => {
     items.value = data.data
   } catch (error) {
     console.error("Ein Fehler ist aufgetreten: ", error)
-  } finally {
-    isLoadingItems.value = false
   }
 }
 
@@ -62,9 +57,11 @@ const filterItems = async () => {
     filteredItems.value = items.value.filter(
       (item) => item.category_name === props.selectedCategory.category_name
     )
-  } else {
-    filteredItems.value = []
   }
+  if (props.selectedCategory === "ITEMS") {
+    filteredItems.value = items.value
+  }
+  isLoadingItems.value = false
 }
 
 onMounted(fetchItems)
@@ -89,9 +86,36 @@ watch(() => props.selectedCategory, filterItems, {deep: true})
   padding: 0;
 }
 
+.card-title {
+  padding-bottom: 0;
+}
+
+.card-subtitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 .item-img {
   padding: 0;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+}
+
+.item-price {
+  width: 65%;
+  margin: 0;
+}
+
+.item-stock {
+  padding: 10px;
+  width: 35%;
+  text-align: center;
+  border-radius: 10px;
 }
 </style>

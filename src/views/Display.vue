@@ -15,7 +15,6 @@ import ItemGrid from "@/components/ItemGrid.vue"
 import {defineEmits} from "vue"
 
 const props = defineProps(['selectedCategory'])
-// eslint-disable-next-line vue/valid-define-emits
 const emit = defineEmits()
 const selectCategory = (category: any) => {
   emit('category-selected', props.selectedCategory)
