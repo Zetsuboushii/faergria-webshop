@@ -4,6 +4,20 @@
     <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
     <Display :selectedCategory="selectedCategory" class="display"/>
   </v-container>
+  <v-btn
+    v-scroll="onScroll"
+    v-show="fab"
+    fab
+    dark
+    fixed
+    bottom
+    right
+    color="primary"
+    @click="toTop"
+    class="fab-button"
+  >
+    <v-icon icon="mdi-arrow-up" />
+  </v-btn>
 </template>
 
 <script lang="ts" setup>
@@ -11,10 +25,28 @@ import {ref} from 'vue'
 import NavDrawer from "@/components/NavDrawer.vue"
 import Display from "@/views/Display.vue"
 
+interface EventTargetWithScrollTop extends EventTarget {
+  scrollTop?: number
+}
+
 const selectedCategory = ref(null)
+const fab = ref<boolean>(false)
 
 const onCategorySelected = (category: any) => {
   selectedCategory.value = category
+}
+
+const onScroll = (e: Event) => {
+  if (typeof window === "undefined") return
+  const target = e.target as EventTarget & { scrollTop?: number }
+  const top = window.pageYOffset || target.scrollTop || 0
+  fab.value = top > 20
+}
+
+const toTop = () => {
+  // const app = getCurrentInstance()?.appContext.app
+  // const vuetify = app?.config.globalProperties.$vuetify
+  window.scrollTo({ top: 0, behavior: "smooth" })
 }
 </script>
 
@@ -37,7 +69,12 @@ const onCategorySelected = (category: any) => {
 .display {
   width: 70%;
   padding: 0;
-  max-height: 1000px;
-  overflow: scroll;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
 }
 </style>

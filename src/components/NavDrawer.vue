@@ -16,15 +16,6 @@
           @click="selectCategory(category)"
         ></v-list-item>
       </v-list-item>
-      <v-list-item title="COLLECTIONS">
-        <v-list-item
-          class="category-items"
-          v-for="collection in collections"
-          :key="collection.collection_id"
-          :title="collection.collection_name"
-          @click="selectCategory(collection)"
-        ></v-list-item>
-      </v-list-item>
       <v-list-item title="ABOUT" @click="selectCategory('ABOUT')"></v-list-item>
       <v-list-item title="FAQ" @click="selectCategory('FAQ')"></v-list-item>
     </v-container>
