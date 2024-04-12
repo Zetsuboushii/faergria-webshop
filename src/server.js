@@ -13,11 +13,43 @@ const db = new sqlite3.Database('./src/identifier.sqlite', sqlite3.OPEN_READWRIT
   console.log('Verbunden mit der SQLite-Datenbank.')
 })
 
-app.get('/categories', (req, res) => {
-  const sql = 'SELECT * FROM categories'
+app.get('/', (req, res) => {
+  const sql = 'select * from categories, items, collections'
+})
+
+app.get('/items', (req, res) => {
+  const sql = 'select * from items join categories cat on cat.category_id = items.fk_category join collections col on col.collection_id = items.fk_collection ORDER BY col.collection_name, item_name'
   db.all(sql, [], (err, rows) => {
     if (err) {
-      res.status(400).json({ error: err.message })
+      res.status(400).json({error: err.message})
+      return
+    }
+    res.json({
+      message: 'Erfolg',
+      data: rows
+    })
+  })
+})
+
+app.get('/categories', (req, res) => {
+  const sql = 'select * from categories ORDER BY category_name'
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(400).json({error: err.message})
+      return
+    }
+    res.json({
+      message: 'Erfolg',
+      data: rows
+    })
+  })
+})
+
+app.get('/collections', (req, res) => {
+  const sql = 'select * from collections ORDER BY collection_name'
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(400).json({error: err.message})
       return
     }
     res.json({
