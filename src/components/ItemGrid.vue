@@ -1,7 +1,5 @@
 <template>
   <v-row v-if="!isLoadingItems" class="head-row">
-    <v-container class="text-h4 category-headline">{{ props.selectedCategory.category_name }}</v-container>
-    <v-divider></v-divider>
     <v-col v-for="(item, i) in filterItems()" :key="i" class="items-col">
       <v-card height="auto" width="335" class="item-card">
         <v-card-title class="card-title">{{ item.item_name }}</v-card-title>

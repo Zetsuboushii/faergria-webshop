@@ -58,9 +58,7 @@ const fetchCollections = async () => {
   }
 }
 
-// eslint-disable-next-line vue/valid-define-emits
 const emit = defineEmits()
-
 const selectCategory = (category: any) => {
   emit('category-selected', category)
 }

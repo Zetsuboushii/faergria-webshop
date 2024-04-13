@@ -1,5 +1,5 @@
 <template>
-  <v-parallax height="60%" src="../assets/header.png"></v-parallax>
+  <!-- <v-parallax height="60%" src="../assets/header.png"></v-parallax> -->
   <v-container class="content-container" justify="center">
     <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
     <Display :selectedCategory="selectedCategory" class="display"/>
