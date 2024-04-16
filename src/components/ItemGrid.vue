@@ -14,16 +14,27 @@
           <div class="item-stock bg-yellow-accent-1" v-if="item.stock < 25 && item.stock > 0">Few Left</div>
           <div class="item-stock bg-red-accent-1" v-if="item.stock == 0">Out of Stock</div>
         </v-container>
+        <v-card-actions>
+          <v-btn
+            dark
+            fixed
+            top
+            right
+            size="large"
+            @click="cartItem = (item.item_id, item.item_name)"
+          >
+            <v-icon icon="mdi-plus"/>
+            Add to Cart
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
-  <v-row v-else class="head-row">
-    knecht
-  </v-row>
+  <v-row v-else class="head-row"></v-row>
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref, watch} from "vue"
+import {defineEmits, onMounted, ref, watch} from "vue"
 
 interface Item {
   item_id: string
@@ -34,20 +45,11 @@ interface Item {
   stock: number
 }
 
-interface Category {
-  category_id: number
-  category_name: string
-}
-
-interface Collection {
-  collection_id: number
-  collection_name: string
-}
-
-const props = defineProps(["selectedCategory"])
+const props = defineProps(["selectedCategory", "cart"])
 const items = ref<Item[]>([])
 const filteredItems = ref<Item[]>([])
 const isLoadingItems = ref<boolean>(false)
+const cartItem = ref()
 
 const fetchItems = async () => {
   try {
@@ -62,7 +64,6 @@ const fetchItems = async () => {
 }
 
 const filterItems = () => {
-  console.log("bogos")
   if (props.selectedCategory && props.selectedCategory.category_name) {
     return items.value.filter(
       (item) => item.category_name === props.selectedCategory.category_name
@@ -71,6 +72,13 @@ const filterItems = () => {
   if (props.selectedCategory === "ITEMS") {
     return items.value
   }
+}
+
+const emit = defineEmits()
+if (cartItem) {
+  emit("cartItem", cartItem.value)
+  emit("push", true)
+  cartItem.value = null
 }
 
 onMounted(fetchItems)

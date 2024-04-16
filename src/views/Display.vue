@@ -1,10 +1,8 @@
 <template>
   <div>
     <div v-if="selectedCategory == null || selectedCategory == 'HOME'">
-      <CategoryHeader :selectedCategory="selectedCategory"/>
-    </div>
-    <div v-if="selectedCategory != null && selectedCategory == 'ITEMS'">
-      <CategoryHeader :selectedCategory="selectedCategory"/>
+      <CategoryHeader :selectedCategory="'HOME'"/>
+      <Home/>
     </div>
     <div v-if="selectedCategory != null && checkCategories()">
       <CategoryHeader :selectedCategory="'ITEMS/' + selectedCategory.category_name"/>
@@ -12,9 +10,11 @@
     </div>
     <div v-if="selectedCategory != null && selectedCategory == 'ABOUT'">
       <CategoryHeader :selectedCategory="selectedCategory"/>
+      <About/>
     </div>
     <div v-if="selectedCategory != null && selectedCategory == 'FAQ'">
       <CategoryHeader :selectedCategory="selectedCategory"/>
+      <FAQ/>
     </div>
   </div>
 </template>
@@ -23,18 +23,22 @@
 import ItemGrid from "@/components/ItemGrid.vue"
 import {defineEmits, ref} from "vue"
 import CategoryHeader from "@/components/CategoryHeader.vue";
+import Home from "@/components/Home.vue";
+import About from "@/components/About.vue";
+import FAQ from "@/components/FAQ.vue";
 
 interface Category {
   category_id: number
   category_name: string
 }
 
-const props = defineProps(['selectedCategory'])
+const props = defineProps(["selectedCategory", "cartItem", "push"])
+const item = ref()
 
 const emit = defineEmits()
-const setCategory = () => {
-  emit('category-selected', props.selectedCategory)
-}
+emit("category-selected", props.selectedCategory)
+emit("cartItem", props.cartItem)
+emit("push", props.push)
 
 const checkCategories = () => {
   return ["Apparel", "Books", "Fumo", "Various", "Wall Art"].includes(props.selectedCategory.category_name)
