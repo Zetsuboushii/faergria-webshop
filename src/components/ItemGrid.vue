@@ -21,7 +21,7 @@
             top
             right
             size="large"
-            @click="cartItem = (item.item_id, item.item_name)"
+            @click="putIntoCart(item)"
           >
             <v-icon icon="mdi-plus"/>
             Add to Cart
@@ -34,7 +34,8 @@
 </template>
 
 <script lang="ts" setup>
-import {defineEmits, onMounted, ref, watch} from "vue"
+import {onMounted, ref, watch} from "vue"
+import Cookies from "js-cookie"
 
 interface Item {
   item_id: string
@@ -45,11 +46,9 @@ interface Item {
   stock: number
 }
 
-const props = defineProps(["selectedCategory", "cart"])
+const props = defineProps(["selectedCategory"])
 const items = ref<Item[]>([])
-const filteredItems = ref<Item[]>([])
 const isLoadingItems = ref<boolean>(false)
-const cartItem = ref()
 
 const fetchItems = async () => {
   try {
@@ -74,11 +73,12 @@ const filterItems = () => {
   }
 }
 
-const emit = defineEmits()
-if (cartItem) {
-  emit("cartItem", cartItem.value)
-  emit("push", true)
-  cartItem.value = null
+const putIntoCart = (item: Item) => {
+  let cart = []
+  let cookie = Cookies.get("cart")
+  if (cookie) cart = JSON.parse(cookie)
+  cart.push(item.item_id)
+  Cookies.set("cart", cart)
 }
 
 onMounted(fetchItems)

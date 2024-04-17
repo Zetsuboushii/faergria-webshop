@@ -27,18 +27,10 @@ import Home from "@/components/Home.vue";
 import About from "@/components/About.vue";
 import FAQ from "@/components/FAQ.vue";
 
-interface Category {
-  category_id: number
-  category_name: string
-}
-
-const props = defineProps(["selectedCategory", "cartItem", "push"])
-const item = ref()
+const props = defineProps(["selectedCategory"])
 
 const emit = defineEmits()
 emit("category-selected", props.selectedCategory)
-emit("cartItem", props.cartItem)
-emit("push", props.push)
 
 const checkCategories = () => {
   return ["Apparel", "Books", "Fumo", "Various", "Wall Art"].includes(props.selectedCategory.category_name)

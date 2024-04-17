@@ -2,9 +2,9 @@
   <v-parallax height="60%" src="../assets/header.png"></v-parallax>
   <v-container class="content-container" justify="center">
     <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
-    <Display :selectedCategory="selectedCategory" @push="pushToCart(cartItem)" class="display"/>
+    <Display :selectedCategory="selectedCategory" class="display"/>
   </v-container>
-  <SideDrawer :cart="cart"/>
+  <SideDrawer/>
 </template>
 
 <script lang="ts" setup>
@@ -22,17 +22,10 @@ interface CartItem {
   item_name: string
 }
 
-const props = defineProps(["cartItem"])
-
 const selectedCategory = ref(null)
-const cart = ref<CartItem[]>([])
 
 const onCategorySelected = (category: any) => {
   selectedCategory.value = category
-}
-
-const pushToCart = (item: CartItem) => {
-  cart.value.push(item)
 }
 </script>
 

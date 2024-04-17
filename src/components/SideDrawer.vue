@@ -37,8 +37,6 @@
 import {defineEmits, ref} from "vue"
 import Cart from "@/components/Cart.vue"
 
-const props = defineProps(["cart"])
-
 const cartOpened = ref(false)
 const fab = ref<boolean>(false)
 
@@ -58,9 +56,6 @@ const toTop = () => {
   // const vuetify = app?.config.globalProperties.$vuetify
   window.scrollTo({top: 0, behavior: "smooth"})
 }
-
-const emit = defineEmits()
-emit("cart", props.cart)
 </script>
 
 <style scoped>

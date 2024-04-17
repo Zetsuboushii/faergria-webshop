@@ -1,5 +1,43 @@
 # faergria.shop
 
+## Datenbankmodell
+
+```mermaid
+
+erDiagram
+    ITEM {
+        text item_id
+        text item_name
+        integer fk_category
+        integer fk_collection
+        real price
+        integer stock
+    }
+    CATEGORY {
+        integer category_id
+        text category_name
+    }
+    COLLECTION {
+        integer collection_id
+        text collection_name
+    }
+    ORDER {
+        integer order_id
+        date order_date
+        text order_email
+        text order_name
+        text order_address
+    }
+    ORDER_ITEM {
+        integer order_id
+        text item_id
+    }
+    ITEM }o--|| CATEGORY: has
+    ITEM }o--|| COLLECTION: is_in
+    ORDER }o--o{ ORDER_ITEM: expands
+    ORDER_ITEM }o--o{ ITEM: is_in
+```
+
 ## Business Case für einen Merchandise-Onlineshop
 
 ### 1. Executive Summary
