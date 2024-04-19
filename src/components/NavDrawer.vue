@@ -1,7 +1,12 @@
 <template>
   <v-container>
     <v-container align="center">
-      <v-img :class="`cursor-pointer`" :width="200" src="../assets/logo.png" @click="selectCategory('HOME')"></v-img>
+      <v-img
+        :class="`cursor-pointer`"
+        :width="200"
+        src="../assets/logo.png"
+        @click="selectCategory('HOME')"
+      ></v-img>
     </v-container>
     <v-divider></v-divider>
     <v-container justify="center" class="nav-container-content">

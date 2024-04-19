@@ -4,20 +4,16 @@
     permanent
     class="cart"
   >
-    <v-list density="compact" nav>
-      <v-list-item v-for="item in items" :key="item.item_id">
-        <v-card>
-          {{ item.item_name }}
-          {{item.quantity}}
-        </v-card>
-      </v-list-item>
-    </v-list>
+    <v-col v-for="item in items" :key="item.item_id">
+      <CartItem :item="item"/>
+    </v-col>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
 import Cookies from "js-cookie";
 import {onMounted, ref} from "vue";
+import CartItem from "@/components/CartItem.vue";
 
 interface Item {
   item_id: string
@@ -56,12 +52,18 @@ const getCart = async () => {
   }
 }
 
-onMounted(getCart)
+onMounted(() => {
+  getCart()
+  setInterval(() => {
+    const currentCart = Cookies.get("cart")
+    if (currentCart !== localStorage.lastCart) {
+      getCart()
+      localStorage.lastCart = currentCart
+    }
+  }, 1000)
+})
 </script>
 
 <style scoped>
-.cart {
-  z-index: 90 !important;
-  width: 300px;
-}
+
 </style>

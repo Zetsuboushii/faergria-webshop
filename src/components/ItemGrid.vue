@@ -1,7 +1,7 @@
 <template>
   <v-row v-if="!isLoadingItems" class="head-row">
     <v-col v-for="(item, i) in filterItems()" :key="i" class="items-col">
-      <v-card height="auto" width="335" class="item-card">
+      <v-card elevation="10" height="auto" width="335" class="item-card">
         <v-card-title class="card-title">{{ item.item_name }}</v-card-title>
         <v-card-subtitle class="card-subtitle">{{ item.collection_name }}</v-card-subtitle>
         <v-divider></v-divider>
@@ -105,7 +105,6 @@ watch(() => props.selectedCategory, filterItems, {deep: true})
 }
 
 .card-title {
-  padding-bottom: 0;
 }
 
 .card-subtitle {
