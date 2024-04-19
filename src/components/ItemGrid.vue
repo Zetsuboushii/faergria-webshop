@@ -74,11 +74,17 @@ const filterItems = () => {
 }
 
 const putIntoCart = (item: Item) => {
-  let cart = []
   let cookie = Cookies.get("cart")
-  if (cookie) cart = JSON.parse(cookie)
+  let cart: any[] = []
+
+  if (cookie) {
+    cart = cookie.split(",")
+  }
+
   cart.push(item.item_id)
-  Cookies.set("cart", cart)
+  console.log(cart)
+
+  Cookies.set("cart", cart.join(","))
 }
 
 onMounted(fetchItems)
@@ -86,10 +92,6 @@ watch(() => props.selectedCategory, filterItems, {deep: true})
 </script>
 
 <style scoped>
-.category-headline {
-  width: 100%;
-}
-
 .head-row {
   margin: 0;
   padding: 0;
