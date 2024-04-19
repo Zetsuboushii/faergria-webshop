@@ -84,7 +84,7 @@ const putIntoCart = (item: Item) => {
   cart.push(item.item_id)
   console.log(cart)
 
-  Cookies.set("cart", cart.join(","))
+  Cookies.set("cart", cart.join(","), { sameSite: "strict" })
 }
 
 onMounted(fetchItems)
