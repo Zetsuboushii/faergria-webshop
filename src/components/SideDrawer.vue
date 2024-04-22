@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import {defineEmits, ref} from "vue"
-import Cart from "@/components/Cart.vue"
+import Cart from "@/views/Cart.vue"
 
 const cartOpened = ref(false)
 const fab = ref<boolean>(false)

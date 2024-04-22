@@ -7,15 +7,15 @@
   >
     <div class="cart-item-overlay"></div>
     <div class="cart-item-content">
-      <v-container class="cart-item-title">{{ item.item_name }}</v-container>
-      Quantity: {{ item.quantity }}
-      Price: {{ (item.price * item.quantity).toFixed(2) + '€' }}
+      <v-container class="cart-item-title">{{ item.item_name + " x" + item.quantity}}</v-container>
+      <div class="cart-item-price">{{ (item.price * item.quantity).toFixed(2) + '€' }}</div>
       <div class="cart-btn-container">
         <v-btn
           color="gray-lighten-2"
           text="+"
           variant="tonal"
           class="cart-item-btn-count"
+          @click="putIntoCart(item)"
         ></v-btn>
         <v-btn
           color="gray-lighten-2"
@@ -35,7 +35,39 @@
 </template>
 
 <script setup lang="ts">
+import Cookies from "js-cookie";
+
+interface Item {
+  item_id: string
+  item_name: string
+}
+
 const props = defineProps(["item"])
+
+const putIntoCart = (item: Item) => {
+  let cookie = Cookies.get("cart")
+  let cart: any[] = []
+
+  if (cookie) {
+    cart = cookie.split(",")
+  }
+
+  cart.push(item.item_id)
+
+  Cookies.set("cart", cart.join(","), {sameSite: "strict"})
+}
+
+const removeFromCart = (item: Item) => {
+  let cookie = Cookies.get("cart")
+  let cart: any[] = []
+
+  if (cookie) {
+    cart = cookie.split(",")
+    cart[cart.indexOf(item.item_id)] = ""
+  }
+
+  Cookies.set("cart", cart.join(","), {sameSite: "strict"})
+}
 </script>
 
 <style scoped>
@@ -61,6 +93,11 @@ const props = defineProps(["item"])
 .cart-item .cart-item-content {
   position: relative;
   z-index: 2;
+}
+
+.cart-item .cart-item-price {
+  padding-left: 15px;
+  padding-bottom: 10px;
 }
 
 .cart-item .cart-btn-container {
