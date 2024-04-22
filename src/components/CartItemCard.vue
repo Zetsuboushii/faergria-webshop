@@ -36,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import Cookies from "js-cookie";
-
 interface Item {
   item_id: string
   item_name: string
@@ -50,27 +48,22 @@ interface Item {
 const props = defineProps(["item"])
 
 const putIntoCart = (item: Item) => {
-  let cookie = Cookies.get("cart")
   let cart: any[] = []
 
-  if (cookie) {
-    cart = cookie.split(",")
+  if (localStorage.cart) {
+    cart = localStorage.cart.split(",")
   }
 
   cart.push(item.item_id)
 
-  Cookies.set("cart", cart.join(","), {sameSite: "strict"})
+  localStorage.cart = cart.join(",")
 }
 
 const removeFromCart = (item: Item) => {
-  let cookie = Cookies.get("cart")
-
-  if (cookie) {
-    cookie = cookie.replace(new RegExp(`(${item.item_id},?|,${item.item_id})`), '')
-    if (cookie != "") {
-      Cookies.set("cart", cookie, {sameSite: "strict"})
-    } else {
-      Cookies.set("cart", ",", {sameSite: "strict"})
+  if (localStorage.cart) {
+    localStorage.cart = localStorage.cart.replace(new RegExp(`(${item.item_id},?|,${item.item_id})`), '')
+    if (localStorage.cart == "") {
+      localStorage.cart = ","
     }
   }
 }

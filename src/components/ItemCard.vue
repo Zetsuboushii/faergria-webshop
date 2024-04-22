@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import Cookies from "js-cookie";
 
 interface Item {
   item_id: string
@@ -43,16 +42,15 @@ interface Item {
 const props = defineProps(["item"])
 
 const putIntoCart = (item: Item) => {
-  let cookie = Cookies.get("cart")
   let cart: any[] = []
 
-  if (cookie) {
-    cart = cookie.split(",")
+  if (localStorage.cart) {
+    cart = localStorage.cart.split(",")
   }
 
   cart.push(item.item_id)
 
-  Cookies.set("cart", cart.join(","), { sameSite: "strict" })
+  localStorage.cart = cart.join(",")
 }
 </script>
 

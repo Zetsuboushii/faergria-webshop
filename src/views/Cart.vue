@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import Cookies from "js-cookie";
 import {onMounted, ref} from "vue";
 import CartItem from "@/components/CartItemCard.vue";
 
@@ -40,12 +39,11 @@ const total = ref<number>(0)
 const checkout = ref<boolean>(false)
 
 const getCart = async () => {
-  let cookie = Cookies.get("cart")
   let cart: any[] = []
   let itemCounts: { [item: string]: number } = {}
 
-  if (cookie) {
-    cart = cookie.split(",")
+  if (localStorage.cart) {
+    cart = localStorage.cart.split(",")
 
     cart.forEach(item => {
       itemCounts[item] = (itemCounts[item] || 0) + 1
@@ -73,7 +71,7 @@ const getCart = async () => {
 onMounted(() => {
   getCart()
   setInterval(() => {
-    const currentCart = Cookies.get("cart")
+    const currentCart = localStorage.cart
     if (currentCart !== localStorage.lastCart || currentCart != "") {
       getCart()
       localStorage.lastCart = currentCart
