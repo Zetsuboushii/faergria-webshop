@@ -21,7 +21,7 @@
         size="large"
         @click="putIntoCart(item)"
       >
-        <v-icon icon="mdi-plus"/>
+        <v-icon icon="mdi-cart-plus"/>
         Add to Cart
       </v-btn>
     </v-card-actions>

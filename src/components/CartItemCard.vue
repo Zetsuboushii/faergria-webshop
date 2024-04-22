@@ -21,7 +21,6 @@
           {{ item.quantity }}
           <v-btn
             color="red-lighten-2"
-            text="-"
             variant="tonal"
             class="cart-item-btn-count"
             @click="removeFromCart(item)"

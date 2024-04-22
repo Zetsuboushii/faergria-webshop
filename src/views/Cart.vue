@@ -12,18 +12,30 @@
     <div v-if="cartItems.length > 0">
       <v-divider></v-divider>
       <v-container>Total amount: {{ total.toFixed(2) }}€</v-container>
-      <v-btn
-        class="checkout-btn"
-        @click="checkout = true"
-      >Checkout
-      </v-btn>
+      <v-row justify="center">
+        <v-btn
+          color="blue-lighten-2"
+          variant="outlined"
+          @click="checkout = true"
+        >
+          <v-icon icon="mdi-cart-arrow-right"></v-icon>
+          Checkout
+        </v-btn>
+      </v-row>
     </div>
+    <v-dialog
+      v-model="checkout"
+      width="auto"
+    >
+      <CheckoutCard :cartItems="cartItems" :total="total"/>
+    </v-dialog>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import CartItem from "@/components/CartItemCard.vue";
+import CheckoutCard from "@/components/CheckoutCard.vue";
 
 interface Item {
   item_id: string
@@ -81,7 +93,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.checkout-btn {
 
-}
 </style>

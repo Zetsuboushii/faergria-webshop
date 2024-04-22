@@ -13,7 +13,8 @@
       class="button cart-button"
       :class="{ open: cartOpened }"
     >
-      <v-icon icon="mdi-cart"/>
+      <v-icon v-if="!cartOpened" icon="mdi-cart"/>
+      <v-icon v-if="cartOpened" icon="mdi-cart-off"/>
     </v-btn>
     <v-btn
       v-scroll="onScroll"
@@ -28,7 +29,7 @@
       class="button gtt-button"
       :class="{ open: cartOpened }"
     >
-      <v-icon icon="mdi-arrow-up"/>
+      <v-icon icon="mdi-arrow-up-right"/>
     </v-btn>
   </div>
 </template>
@@ -66,7 +67,7 @@ const toTop = () => {
   width: 50%;
   align-content: end;
   justify-items: right;
-  z-index: 100;
+  z-index: 90;
   transition: right 0.3s;
 }
 
@@ -82,8 +83,10 @@ const toTop = () => {
   position: fixed;
   right: 20px;
   z-index: 100;
-  width: 75px;
-  height: 75px;
+  min-width: 0;
+  min-height: 0;
+  width: 50px;
+  height: 50px;
   border-radius: 5px;
   color: white;
   background-color: turquoise;
