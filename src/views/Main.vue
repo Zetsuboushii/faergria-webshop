@@ -43,10 +43,13 @@ const onCategorySelected = (category: any) => {
 
 .nav-drawer {
   width: 30%;
+  height: 800px;
 }
 
 .display {
   width: 70%;
   padding: 0;
+  height: 800px;
+  overflow-y: scroll;
 }
 </style>
