@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    Welcome to the land of Faergria, where adventure await at every turn!
+    <div class="text-center">Welcome to the land of Faergria, where adventure await at every turn!</div>
     <v-divider class="ma-5"></v-divider>
     <v-list lines="three">
       <v-list-subheader>Latest Updates</v-list-subheader>
