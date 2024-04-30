@@ -1,52 +1,31 @@
 <template>
-  <!-- <v-parallax height="60%" src="../assets/header.png"></v-parallax> -->
+  <v-parallax height="60%" src="../assets/header.png"></v-parallax>
   <v-container class="content-container" justify="center">
     <NavDrawer @category-selected="onCategorySelected" class="nav-drawer"/>
     <Display :selectedCategory="selectedCategory" class="display"/>
   </v-container>
-  <v-btn
-    v-scroll="onScroll"
-    v-show="fab"
-    fab
-    dark
-    fixed
-    bottom
-    right
-    color="primary"
-    @click="toTop"
-    class="fab-button"
-  >
-    <v-icon icon="mdi-arrow-up" />
-  </v-btn>
+  <SideDrawer/>
 </template>
 
 <script lang="ts" setup>
 import {ref} from 'vue'
 import NavDrawer from "@/components/NavDrawer.vue"
 import Display from "@/views/Display.vue"
+import SideDrawer from "@/components/SideDrawer.vue"
 
 interface EventTargetWithScrollTop extends EventTarget {
   scrollTop?: number
 }
 
+interface CartItem {
+  item_id: string
+  item_name: string
+}
+
 const selectedCategory = ref(null)
-const fab = ref<boolean>(false)
 
 const onCategorySelected = (category: any) => {
   selectedCategory.value = category
-}
-
-const onScroll = (e: Event) => {
-  if (typeof window === "undefined") return
-  const target = e.target as EventTarget & { scrollTop?: number }
-  const top = window.pageYOffset || target.scrollTop || 0
-  fab.value = top > 20
-}
-
-const toTop = () => {
-  // const app = getCurrentInstance()?.appContext.app
-  // const vuetify = app?.config.globalProperties.$vuetify
-  window.scrollTo({ top: 0, behavior: "smooth" })
 }
 </script>
 
@@ -64,17 +43,13 @@ const toTop = () => {
 
 .nav-drawer {
   width: 30%;
+  height: 800px;
 }
 
 .display {
   width: 70%;
   padding: 0;
-}
-
-.fab-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 100;
+  height: 800px;
+  overflow-y: scroll;
 }
 </style>

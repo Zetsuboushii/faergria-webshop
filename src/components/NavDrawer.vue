@@ -1,12 +1,16 @@
 <template>
   <v-container>
     <v-container align="center">
-      <v-img :width="200" src="../assets/logo.png"></v-img>
+      <v-img
+        :class="`cursor-pointer`"
+        :width="200"
+        src="../assets/logo.png"
+        @click="selectCategory('HOME')"
+      ></v-img>
     </v-container>
     <v-divider></v-divider>
     <v-container justify="center" class="nav-container-content">
       <v-list-item title="HOME" @click="selectCategory('HOME')"></v-list-item>
-      <v-list-item title="ITEMS" @click="selectCategory('ITEMS')"></v-list-item>
       <v-list-item title="CATEGORIES">
         <v-list-item
           class="category-items"
