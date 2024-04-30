@@ -8,7 +8,8 @@
       <v-divider class="ma-5"/>
       <p>Items: {{ (total - (total * 0.19)).toFixed(2) }}€</p>
       <p>Tax: {{ (total * 0.19).toFixed(2) }}€</p>
-      <p>Total: {{ total }}€</p>
+      <p>Shipping: 5.99€</p>
+      <p>Total: {{ total + 5.99 }}€</p>
       <h5 class="text-h5 ma-5">Order Information</h5>
       <v-sheet class="mx-auto order-information">
         <v-form validate-on="submit lazy" @submit.prevent="submit">
@@ -148,7 +149,6 @@ onMounted(fetchCountries)
   height: 80vh;
   overflow: hidden;
   overflow-y: scroll;
-
 }
 
 .checkout-cart h5 {

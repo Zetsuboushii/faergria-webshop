@@ -12,7 +12,9 @@ const db = new sqlite3.Database('./src/identifier.sqlite', sqlite3.OPEN_READWRIT
   console.log('Verbunden mit der SQLite-Datenbank.')
 })
 
-const categoriesSql = `
+db.serialize(() => {
+  db.run(
+    `
   CREATE TABLE IF NOT EXISTS categories
   (
     category_id
@@ -25,9 +27,7 @@ const categoriesSql = `
     NOT
     NULL
   );
-`;
 
-const collectionsSql = `
   CREATE TABLE IF NOT EXISTS collections
   (
     collection_id
@@ -40,9 +40,7 @@ const collectionsSql = `
     NOT
     NULL
   );
-`;
 
-const itemsSql = `
   CREATE TABLE IF NOT EXISTS items
   (
     item_id
@@ -79,9 +77,7 @@ const itemsSql = `
     collection_id
   )
     );
-`;
 
-const ordersSql = `
   CREATE TABLE IF NOT EXISTS orders
   (
     order_id
@@ -102,9 +98,7 @@ const ordersSql = `
     order_country
     TEXT
   );
-`;
 
-const ordersItemsSql = `
   CREATE TABLE IF NOT EXISTS orders_items
   (
     fk_order_id
@@ -135,23 +129,16 @@ const ordersItemsSql = `
   (
     item_id
   )
-    );
-`;
-
-db.serialize(() => {
-  db.run(categoriesSql);
-  db.run(collectionsSql);
-  db.run(itemsSql);
-  db.run(ordersSql);
-  db.run(ordersItemsSql);
-});
+    );`
+  )
+})
 
 app.get('/', (req, res) => {
   const sql = 'select * from categories, item, collection, user, order'
 })
 
 app.get('/items', (req, res) => {
-  const sql = 'select * from items join category cat on cat.category_id = item.fk_category join collection col on col.collection_id = item.fk_collection ORDER BY col.collection_name, item_name'
+  const sql = 'select * from items i join categories cat on cat.category_id = i.fk_category join collections col on col.collection_id = i.fk_collection ORDER BY col.collection_name, item_name'
   db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(400).json({error: err.message})
@@ -208,7 +195,7 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/orders', (req, res) => {
-  const sql = 'select * from orders_items join main.items i on i.item_id = orders_items.fk_item_id'
+  const sql = 'select * from orders_items join items i on i.item_id = orders_items.fk_item_id'
   db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(400).json({error: err.message})
@@ -227,62 +214,62 @@ app.post('/save-order', (req, res) => {
   const orderInsertSql = `
     INSERT INTO orders (order_date, order_email, order_name, order_address, order_postal, order_country)
     VALUES (?, ?, ?, ?, ?, ?)
-  `;
+  `
 
-  const values = [new Date(), orderData.email, orderData.name, orderData.address, orderData.postal, orderData.country];
+  const values = [new Date(), orderData.email, orderData.name, orderData.address, orderData.postal, orderData.country]
 
   db.run(orderInsertSql, values, function (err) {
     if (err) {
-      console.error("Fehler beim Einfügen der Bestellung:", err.message);
-      res.status(500).json({error: err.message});
-      return;
+      console.error("Fehler beim Einfügen der Bestellung:", err.message)
+      res.status(500).json({error: err.message})
+      return
     }
 
-    console.log("Bestellung erfolgreich eingefügt. ID:", this.lastID);
+    console.log("Bestellung erfolgreich eingefügt. ID:", this.lastID)
 
     // Jetzt können wir die Bestellungselemente einfügen
-    const orderId = this.lastID;
-    const orderItems = orderData.items;
+    const orderId = this.lastID
+    const orderItems = orderData.items
     console.log(orderItems)
 
     const orderItemInsertSql = `
       INSERT INTO orders_items (fk_order_id, fk_item_id)
       VALUES (?, ?)
-    `;
+    `
 
     // Eine Transaktion starten, um sicherzustellen, dass entweder alle Artikel eingefügt werden oder keiner
     db.run("BEGIN TRANSACTION", function (err) {
       if (err) {
-        console.error("Fehler beim Starten der Transaktion:", err.message);
-        res.status(500).json({error: err.message});
-        return;
+        console.error("Fehler beim Starten der Transaktion:", err.message)
+        res.status(500).json({error: err.message})
+        return
       }
 
       // Artikel in die Datenbank einfügen
       orderItems.forEach(item => {
         db.run(orderItemInsertSql, [orderId, item.item_id], function (err) {
           if (err) {
-            console.error("Fehler beim Einfügen des Artikels:", err.message);
-            res.status(500).json({error: err.message});
-            return;
+            console.error("Fehler beim Einfügen des Artikels:", err.message)
+            res.status(500).json({error: err.message})
+            return
           }
-          console.log("Artikel erfolgreich eingefügt. ID:", this.lastID);
-        });
-      });
+          console.log("Artikel erfolgreich eingefügt. ID:", this.lastID)
+        })
+      })
 
       // Transaktion beenden
       db.run("COMMIT", function (err) {
         if (err) {
-          console.error("Fehler beim Beenden der Transaktion:", err.message);
-          res.status(500).json({error: err.message});
-          return;
+          console.error("Fehler beim Beenden der Transaktion:", err.message)
+          res.status(500).json({error: err.message})
+          return
         }
 
-        console.log("Transaktion erfolgreich abgeschlossen.");
-        res.json({message: 'Bestellung erfolgreich gespeichert'});
-      });
-    });
-  });
+        console.log("Transaktion erfolgreich abgeschlossen.")
+        res.json({message: 'Bestellung erfolgreich gespeichert'})
+      })
+    })
+  })
 })
 
 
