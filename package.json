@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run serve\" \"npm run start\"",
-    "serve": "vite",
+    "start": "concurrently \"npm run serve\" \"npm run dev\"",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "start": "nodemon --exec ts-node ./src/server.js",
+    "serve": "nodemon --exec ts-node ./src/server.js",
     "preview": "vite preview"
   },
   "dependencies": {
