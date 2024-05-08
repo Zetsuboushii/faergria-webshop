@@ -10,6 +10,7 @@
 <script lang="ts" setup>
 import {onMounted, ref, watch} from "vue"
 import ItemCard from "@/components/ItemCard.vue";
+import {API_URL} from "@/apiUrl";
 
 interface Item {
   item_id: string
@@ -27,7 +28,7 @@ const isLoadingItems = ref<boolean>(false)
 const fetchItems = async () => {
   try {
     isLoadingItems.value = true
-    const response = await fetch("http://localhost:1337/items")
+    const response = await fetch(API_URL + "/items")
     const data = await response.json()
     items.value = data.data
     isLoadingItems.value = false

@@ -1,12 +1,12 @@
 {
   "name": "faergria-webshop",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "concurrently \"npm run serve\" \"npm run dev\"",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "nodemon --exec ts-node ./src/server.js",
+    "serve": "nodemon --exec node ./src/server.js",
     "preview": "vite preview"
   },
   "dependencies": {

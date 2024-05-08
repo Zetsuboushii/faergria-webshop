@@ -36,6 +36,7 @@
 import {onMounted, ref} from "vue";
 import CartItem from "@/components/CartItemCard.vue";
 import CheckoutCard from "@/components/CheckoutCard.vue";
+import {API_URL} from "@/apiUrl";
 
 interface Item {
   item_id: string
@@ -50,7 +51,7 @@ const cartItems = ref<Item[]>([])
 const total = ref<number>(0)
 const checkout = ref<boolean>(false)
 
-const getCart = async () => {
+const fetchCart = async () => {
   let cart: any[] = []
   let itemCounts: { [item: string]: number } = {}
 
@@ -62,7 +63,7 @@ const getCart = async () => {
     })
 
     try {
-      const response = await fetch("http://localhost:1337/items")
+      const response = await fetch(API_URL + "/items")
       const data = await response.json()
       cartItems.value = data.data
 
@@ -81,11 +82,11 @@ const getCart = async () => {
 }
 
 onMounted(() => {
-  getCart()
+  fetchCart()
   setInterval(() => {
     const currentCart = localStorage.cart
     if (currentCart !== localStorage.lastCart || currentCart != "") {
-      getCart()
+      fetchCart()
       localStorage.lastCart = currentCart
     }
   }, 1000)

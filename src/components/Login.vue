@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import Cookies from 'js-cookie'
+import {API_URL} from "@/apiUrl";
 
 const userID = ref('')
 const username = ref('')
@@ -21,7 +22,7 @@ const password = ref('')
 
 const login = async () => {
   try {
-    const response = await fetch("http://localhost:1337/login", {
+    const response = await fetch( API_URL + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

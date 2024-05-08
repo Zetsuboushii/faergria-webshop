@@ -28,6 +28,7 @@
 
 <script lang="ts" setup>
 import {defineEmits, onMounted, ref} from "vue"
+import {API_URL} from "@/apiUrl";
 
 interface Category {
   category_id: number
@@ -44,7 +45,7 @@ const collections = ref<Collection[]>([])
 
 const fetchCategories = async () => {
   try {
-    const response = await fetch('http://localhost:1337/categories')
+    const response = await fetch(API_URL + '/categories')
     const data = await response.json()
     categories.value = data.data
   } catch (error) {
@@ -54,7 +55,7 @@ const fetchCategories = async () => {
 
 const fetchCollections = async () => {
   try {
-    const response = await fetch('http://localhost:1337/collections')
+    const response = await fetch(API_URL + '/collections')
     const data = await response.json()
     collections.value = data.data
   } catch (error) {

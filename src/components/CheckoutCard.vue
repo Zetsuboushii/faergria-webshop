@@ -71,6 +71,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import {API_URL} from "@/apiUrl";
 
 const props = defineProps(["cartItems", "total"])
 
@@ -131,7 +132,7 @@ const submit = async (event: any) => {
   }
 
   try {
-    const res = await axios.post('http://localhost:1337/save-order', orderData)
+    const res = await axios.post(API_URL + '/save-order', orderData)
     alert(res)
   } catch (err) {
     console.error('Error: ', err)
