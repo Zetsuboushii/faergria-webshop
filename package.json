@@ -16,6 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "js-cookie": "^3.0.5",
+    "paypal": "^1.0.1",
+    "paypal-checkout": "^4.0.343",
     "roboto-fontface": "*",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
