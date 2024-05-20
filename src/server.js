@@ -7,7 +7,9 @@ const PORT = 1337
 app.use(cors())
 app.use(express.json())
 
-const db = new sqlite3.Database('./src/identifier.sqlite', sqlite3.OPEN_READWRITE, (err) => {
+let db_path = __dirname + "/identifier.sqlite"
+console.log(db_path)
+const db = new sqlite3.Database(db_path, sqlite3.OPEN_READWRITE, (err) => {
   if (err) return console.error(err.message)
   console.log('Verbunden mit der SQLite-Datenbank.')
 })
@@ -133,10 +135,6 @@ db.serialize(() => {
   )
 })
 
-app.get('/', (req, res) => {
-  const sql = 'select * from categories, item, collection, user, order'
-})
-
 app.get('/items', (req, res) => {
   const sql = 'select * from items i join categories cat on cat.category_id = i.fk_category join collections col on col.collection_id = i.fk_collection ORDER BY col.collection_name, item_name'
   db.all(sql, [], (err, rows) => {
@@ -175,21 +173,6 @@ app.get('/collections', (req, res) => {
     res.json({
       message: 'Erfolg',
       data: rows
-    })
-  })
-})
-
-app.post('/login', (req, res) => {
-  const {username, password} = req.body
-  const sql = 'select * from user WHERE username = ? AND password = ?'
-  db.get(sql, [username, password], (err, row) => {
-    if (err) {
-      res.status(400).json({error: err.message})
-      return
-    }
-    res.json({
-      message: 'Erfolg',
-      data: row
     })
   })
 })
@@ -271,6 +254,10 @@ app.post('/save-order', (req, res) => {
     })
   })
 })
+
+/* route requests for static files to appropriate directory */
+app.use('/src',express.static("src/"))
+app.use(express.static("dist") )
 
 
 app.listen(PORT, () => {

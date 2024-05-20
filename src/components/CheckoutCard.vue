@@ -69,8 +69,9 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue"
-import axios from "axios"
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import {API_URL} from "@/apiUrl";
 
 const props = defineProps(["cartItems", "total"])
 
@@ -127,13 +128,11 @@ const submit = async (event: any) => {
     address: address.value,
     postal: postal.value,
     country: country.value,
-    items: props.cartItems,
-    amount: props.total,
-    currency: 'EUR'
+    items: props.cartItems
   }
 
   try {
-    const res = await axios.post('http://localhost:1337/save-order', orderData)
+    const res = await axios.post(API_URL + '/save-order', orderData)
     alert(res)
   } catch (err) {
     console.error('Error: ', err)
